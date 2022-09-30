@@ -25,39 +25,56 @@ int *decompressRLElist(int *nums, int numsSize, int *returnSize)
 
 int main()
 {
-    int size = 4, returnSize;
-
-    int *p = malloc(sizeof(int)*size);
-    *p = 1;
-    *(p+1) = 2;
-    *(p+2) = 3;
-    *(p+3) = 4;
-
+    //size=4
+    int numsSize = 4, returnSize;
     int* result;
-    result = decompressRLElist(p,size,&returnSize);
+
+    int *nums = malloc(sizeof(int)*numsSize);
+    nums[0] = 1;
+    nums[1] = 2;
+    nums[2] = 3;
+    nums[3] = 4;
+
+    result = decompressRLElist(nums,numsSize,&returnSize);
+    /* output verification
     for(int i=0;i<returnSize;i++)
         printf("%d ",*(result+i));
     printf("\n");
-
+    */
     free(result);
 
-    size = 6;
-    p = realloc(p,sizeof(int)*size);
+    //size=6
+    numsSize = 6;
+    nums = realloc(nums,sizeof(int)*numsSize);
 
-    *p = 2;
-    *(p+1) = 2;
-    *(p+2) = 4;
-    *(p+3) = 4;
-    *(p+4) = 5;
-    *(p+5) = 5;
+    nums[0] = 6;
+    nums[1] = 5;
+    nums[2] = 1;
+    nums[3] = 3;
+    nums[4] = 2;
+    nums[5] = 1;
 
-    result = decompressRLElist(p,size,&returnSize);
-    for(int i=0;i<returnSize;i++)
-        printf("%d ",*(result+i));
-    printf("\n");
-
+    result = decompressRLElist(nums,numsSize,&returnSize);
     free(result);
-    free(p);
+
+    //size=8
+    numsSize = 8;
+    nums = realloc(nums,sizeof(int)*numsSize);
+
+    nums[0] = 1;
+    nums[1] = 3;
+    nums[2] = 2;
+    nums[3] = 4;
+    nums[4] = 2;
+    nums[5] = 7;
+    nums[6] = 1;
+    nums[7] = 8;
+
+    result = decompressRLElist(nums,numsSize,&returnSize);
+    free(result);
+
+    //free nums
+    free(nums);
 
     return 0;
 }

@@ -39,9 +39,8 @@ int main()
     /* output verification
     for(int i=0;i<returnSize;i++)
         printf("%d ",*(result+i));
-    */
     printf("\n");
-
+    */
     free(result);
 
     //size=6

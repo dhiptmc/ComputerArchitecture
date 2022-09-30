@@ -25,7 +25,7 @@ int *decompressRLElist(int *nums, int numsSize, int *returnSize)
 
 int main()
 {
-    //size=4
+    //numsSize=4
     int numsSize = 4, returnSize;
     int* result;
 
@@ -43,7 +43,7 @@ int main()
     */
     free(result);
 
-    //size=6
+    //numsSize=6
     numsSize = 6;
     nums = (int*) realloc(nums,sizeof(int)*numsSize);
 
@@ -57,7 +57,7 @@ int main()
     result = decompressRLElist(nums,numsSize,&returnSize);
     free(result);
 
-    //size=8
+    //numsSize=8
     numsSize = 8;
     nums = (int*) realloc(nums,sizeof(int)*numsSize);
 

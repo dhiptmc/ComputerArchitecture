@@ -9,7 +9,7 @@ int *decompressRLElist(int *nums, int numsSize, int *returnSize)
         *returnSize += nums[i];
     }
 
-    int *result = malloc(sizeof(int) * (*returnSize));
+    int *result = (int*) malloc(sizeof(int) * (*returnSize));
     int count = 0;
 
     for (int i = 0; i < numsSize; i += 2)
@@ -29,7 +29,7 @@ int main()
     int numsSize = 4, returnSize;
     int* result;
 
-    int *nums = malloc(sizeof(int)*numsSize);
+    int *nums = (int*) malloc(sizeof(int)*numsSize);
     nums[0] = 1;
     nums[1] = 2;
     nums[2] = 3;
@@ -39,13 +39,14 @@ int main()
     /* output verification
     for(int i=0;i<returnSize;i++)
         printf("%d ",*(result+i));
-    printf("\n");
     */
+    printf("\n");
+
     free(result);
 
     //size=6
     numsSize = 6;
-    nums = realloc(nums,sizeof(int)*numsSize);
+    nums = (int*) realloc(nums,sizeof(int)*numsSize);
 
     nums[0] = 6;
     nums[1] = 5;
@@ -59,7 +60,7 @@ int main()
 
     //size=8
     numsSize = 8;
-    nums = realloc(nums,sizeof(int)*numsSize);
+    nums = (int*) realloc(nums,sizeof(int)*numsSize);
 
     nums[0] = 1;
     nums[1] = 3;

@@ -11,7 +11,7 @@ returnSize3: .word 0
 enter: .string "\n"
 
 .text
-main:                       # execute first test data
+main_1:                     # execute first test data
     la   a1, nums1          # get nums[i]     address    a1->nums1
     la   a2, numsSize1      # get numsSize    address    a2->numsSize1
     lw   a2, 0(a2)          # a2 = numsSize
@@ -20,26 +20,10 @@ main:                       # execute first test data
     addi a4, zero, 0        # a4 = i = 0
     #sw   0, 0(a3)          # *returnSize1 = 0
     addi s2, zero, 2        # record number of data set need to be execute
-    j    loop_1
+    j    outer_loop
 
-
-#####1st loop#####
-step_1:
-    slli t0, a4, 2          # calculate nums[i] address
-    add  t0, t0, a1         # calculate nums[i] address //a1 -> nums base address
-    lw   t1, 0(t0)          # load nums[i] to t1
-    add  a3, a3, t1         # *returnSize += nums[i]
-    addi a4, a4, 2          # i += 2
-
-loop_1:
-    blt  a4, a2, step_1     # if i < numsSize, jump to loop_2
-    addi a4, zero, 0        # set i = 0
-    addi a5, zero, 0        # a5 = j = 0   
-    addi a6, zero, 0        # a6 = count = 0
-    j    loop_2
-
-#####2nd loop#####
-step_2:
+#####loop#####
+proc:
     lw   t1, 4(t0)          # nums[i+1]
     slli t2, a6, 2          # calculate result[count] address
     add  t2, t2, s1         # calculate result[count] address //s1 -> result base address
@@ -47,17 +31,20 @@ step_2:
     addi a6, a6, 1          # count++
     addi a5, a5, 1          # j++ 
 
-loop_3:
+inner_loop:
     slli t0, a4, 2          # calculate nums[i] address
     add  t0, t0, a1         # calculate nums[i] address //a1 -> nums base address
-    lw   t1, 0(t0)          # load nums[i] to t1
-    blt  a5, t1, step_2     # if j < nums[i], jump to step_2
-    addi a5, zero, 0        # a5 = j = 0      
+    lw   t1, 0(t0)          # load nums[i] to t1  
+    blt  a5, t1, proc       # if j < nums[i], jump to proc
+    add  a3, a3, t1         # *returnSize += nums[i] ##modified  
+    addi a5, zero, 0        # a5 = j = 0    
     addi a4, a4, 2          # i += 2
 
-loop_2:
-    blt  a4, a2, loop_3     # if i < numsSize, jump to loop_3
+outer_loop:
+    blt  a4, a2, inner_loop # if i < numsSize, jump to inner_loop
     addi a4, zero, 0        # set i = 0
+    addi a5, zero, 0        # a5 = j = 0   
+    addi a6, zero, 0        # a6 = count = 0
     j    print
 
 #####load different test data#####
@@ -68,7 +55,7 @@ main_2:
     la   a3, returnSize2    # get returnSize2 address    a3->returnSize2
     lw   a3, 0(a3)          # a3 = returnSize
     addi a4, zero, 0        # reset i
-    j    loop_1
+    j    outer_loop
 
 main_3:
     la   a1, nums3
@@ -77,7 +64,7 @@ main_3:
     la   a3, returnSize3    # get returnSize3 address    a3->returnSize3
     lw   a3, 0(a3)          # a3 = returnSize
     addi a4, zero, 0        # reset i
-    j    loop_1
+    j    outer_loop
 
 #####print result#####
 print:
